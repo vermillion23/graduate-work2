@@ -31,11 +31,11 @@ if (!isProduction) {
     app.use(errorHandler());
 }
 
-//app.use(function (req, res, next) {
-//    res.header("Access-Control-Allow-Origin", "*");
-//    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-//    next();
-//});
+app.use(function (req, res, next) {
+   res.header("Access-Control-Allow-Origin", "*");
+   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+   next();
+});
 
 var ObjectId = mongoose.Schema.Types.ObjectId;
 
@@ -53,9 +53,9 @@ var schemaName = new Schema({
 mongoose.connect('mongodb://localhost:27017/usersdb');
 mongoose.set('debug', true);
 
-require('./models/Users');
-require('./config/passport');
-app.user(require('./routes'));
+require('../models/Users');
+require('../config/passport');
+app.use(require('../routes'));
 
 //Error handlers & middlewares
 if (!isProduction) {
@@ -72,6 +72,8 @@ if (!isProduction) {
 app.use((err, req, res, next) => {
     res.status(err.status || 500);
 
+    console.log('Hello Node.js')
+
     res.json({
         errors: {
             message: err.message,
@@ -81,12 +83,12 @@ app.use((err, req, res, next) => {
 });
 
 
-var port = process.env.PORT || 1337;
+var port = process.env.PORT || 1338;
 app.listen(port, function () {
-    console.log('Node.js listening on port ' + port);
+    // console.log('Node.js listening on port ' + port);
 });
 
-//app.post('/user', jsonParser, function (req, res) {
+// app.post('/user', jsonParser, function (req, res) {
 //    var user = req.body;
 
 //    var savedata = new Model({
@@ -102,4 +104,4 @@ app.listen(port, function () {
 //            res.json(result);
 //        }
 //    })
-//})
+// })

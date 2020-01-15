@@ -13,12 +13,12 @@ document.getElementById("submit").addEventListener("click", function (e) {
     let registerForm = document.forms["registerForm"];
     let userName = registerForm.elements["userName"].value;
     let userPassword = registerForm.elements["userPassword"].value;
-    let userEmail = registerForm.elements["userEmail"].value;
+    let userEmail = registerForm.elements["email"].value;
     // сериализуем данные в json
     let user = JSON.stringify({ userName: userName, userPassword: userPassword, userEmail: userEmail });
     let request = new XMLHttpRequest();
     // посылаем запрос на адрес "/user"
-    request.open("POST", "http://127.0.0.1:1337/user", true);
+    request.open("POST", "http://127.0.0.1:1337/users", true);
     request.setRequestHeader("Content-Type", "application/json");
     request.addEventListener("load", function () {
         // получаем и парсим ответ сервера
